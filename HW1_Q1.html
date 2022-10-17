@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Q1</title>
+</head>
+<body>
+    <script>
+        function range(start, end, artis = 1){
+            let array = [];
+            if(artis>0){
+                for(let i = start; i<= end; i+=artis){
+                array.push(i);
+            }
+            }else{
+                for(let i = start; i>= end; i+=artis){
+                array.push(i);
+            }
+            }
+            
+            return array;
+        }
+        function sum(arr){
+            let sum = 0;
+            for(let i = 0; i<arr.length;i++){
+                sum+=arr[i];
+            }
+            return sum;
+        }
+    </script>
+</body>
