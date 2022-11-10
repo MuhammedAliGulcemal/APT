@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" href="https://blm-fsmvu.github.io/305/images/icon192.png">
+  <title>Event Listeners</title>
+
+  <style>
+    /* CSS comment */
+    body {
+      max-width: 440px;
+    }
+
+    #url {
+      width: 190px;
+    }
+
+    span,
+    #url {
+      color: blue;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Battery Status</h1>
+  <p>
+    <span id="bstatus"></span></br>
+    <span id="lev"></span>
+    </br>
+    <span id="time"></span>
+  </p>
+  <h1>Online Status</h1>
+  <p>
+    <span id="statusCheck"></span>
+  </p>
+  <h1>Keyboard</h1>
+  <p>
+    <span id="kb"></span>
+  </p>
+
+  <script>
+    function init() {
+      statusCheck.innerText = window.navigator.onLine ? "connected -- online" : "disconnected -- offline";
+      batteryStatus();
+      myKeyPress();
+    }
+    init();
+    function batteryStatus() {
+      navigator.getBattery().then((b) => {
+        lev.innerText = b.level * 100 + "%"
+        function updateAllBatteryInfo() {
+          updateChargeInfo();
+          updateDischargingInfo();
+        }
+        updateAllBatteryInfo();
+        b.addEventListener("chargingchange", () => {
+          updateChargeInfo();
+        });
+        function updateChargeInfo() {
+          bstatus.innerText = b.charging ? "Charging" : "Discharging";
+        }
+        b.addEventListener("dischargingtimechange", () => {
+          updateDischargingInfo();
+        });
+        function updateDischargingInfo() {
+          time.innerText = b.dischargingTime / 36 + " remaining" ;
+        }
+      });
+    }
+    function myKeyPress() {
+      document.addEventListener('keyup', (event) => {
+        const keyName = event.key;
+        kb.innerText = keyName;
+      }, false);
+      
+    }
+
+
+  </script>
+
+</body>
+
+</html>
