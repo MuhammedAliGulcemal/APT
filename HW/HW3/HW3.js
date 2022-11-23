@@ -36,10 +36,10 @@ function getAnimation() {
 }
 function animate() {
     if (!pause && !this.stop) {
+        requestAnimationFrame(animate);
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         getAnimation();
         ctx.drawImage(imgArr[index], x, y, spriteWidth, spriteHeight);
-        requestAnimationFrame(animate);
     }
 }
 function buttonControl() {
@@ -65,20 +65,20 @@ function pauseAnimation() {
     if (pause) {
         pause = false;
         buttonControl();
+        animate();
     } else {
         pause = true;
         buttonControl();
-        animate();
     }
 }
 function stopAnimation() {
     if (this.stop) {
         this.stop = false;
         buttonControl();
+        animate();
     } else {
         this.stop = true;
         buttonControl();
-        animate();
     }
 }
 function nextAnimation() {
@@ -101,5 +101,4 @@ async function init() {
     await loadImages();
     animate();
 }
-
 init();
