@@ -20,7 +20,7 @@ async function loadImages() {
     }
 }
 async function getImage(i, image) {
-    fetch("Sprite/" + i + ".png").then(function (response) {
+    fetch(mainUrl + i + ".png").then(function (response) {
         return response.blob();
     }).then(function (blob) {
         console.log(blob);
