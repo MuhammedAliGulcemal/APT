@@ -64,16 +64,20 @@ function startAnimation() {
 function pauseAnimation() {
     if (pause) {
         pause = false;
+        buttonControl();
     } else {
         pause = true;
+        buttonControl();
         animate();
     }
 }
 function stopAnimation() {
     if (this.stop) {
         this.stop = false;
+        buttonControl();
     } else {
         this.stop = true;
+        buttonControl();
         animate();
     }
 }
