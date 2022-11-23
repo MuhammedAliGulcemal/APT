@@ -13,11 +13,11 @@
 
 <body>
     <div>
-        <button id="start" type="button" class="btn btn-success" onclick="command('start')">Start</button>
-        <button id="pause" type="button" class="btn btn-primary" onclick="command('pause')">Pause</button>
-        <button id="stop" type="button" class="btn btn-danger">Stop</button>
-        <button id="next" type="button" class="btn btn-warning" disabled>Next</button>
-        <button id="prev" type="button" class="btn btn-warning" disabled>Prev</button>
+        <button id="start" type="button" class="btn btn-success" onclick="startAnimation()">Start</button>
+        <button id="pause" type="button" class="btn btn-primary" onclick="pauseAnimation()">Pause</button>
+        <button id="stop" type="button" class="btn btn-danger" onclick="stopAnimation()">Stop</button>
+        <button id="next" type="button" class="btn btn-warning" onclick="nextAnimation()" disabled>Next</button>
+        <button id="prev" type="button" class="btn btn-warning" onclick= "prevAnimation()" disabled>Prev</button>
     </div>
     <div>
         <canvas id="layout"></canvas>
