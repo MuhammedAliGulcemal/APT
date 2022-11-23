@@ -85,7 +85,11 @@ function stopAnimation() {
         animate();
     } else {
         this.stop = true;
+        imgIndex = 0;
+        x = 0;
         buttonControl();
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
     }
 }
 function nextAnimation() {
@@ -100,7 +104,7 @@ function nextAnimation() {
 function prevAnimation() {
     x -= 2;
     if (x < 0) {
-        x = 0;
+        x = 300;
     }
     imgIndex = ++imgIndex % 5;
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
