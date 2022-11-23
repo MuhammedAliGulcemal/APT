@@ -17,7 +17,6 @@ async function loadImages() {
     for (let i = 0; i < 5; i++) {
         image = new Image();
         getImage(i, image);
-        console.log(i);
         imgArr.push(image);
     }
 }
@@ -25,7 +24,6 @@ async function getImage(i, image) {
     fetch(mainUrl + i + ".png").then(function (response) {
         return response.blob();
     }).then(function (blob) {
-        console.log(blob);
         return image.src = URL.createObjectURL(blob);
     })
 }
