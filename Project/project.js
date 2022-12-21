@@ -4,31 +4,35 @@ const CANVAS_WIDTH = canvas.width = 975;
 const CANVAS_HEIGHT = canvas.height = 600;
 const spriteWidth = 100;
 const spriteHeight = 100;
+const spriteSizeX = 70;
+const spriteSizeY = 100;
 ctx.font = "20px Arial"
 let imgIndex = 0;
 let x = 0;
-let y = 5;
+let y = 0;
 let start = true;
 let pause = false;
 let stop = false;
 let gameFrame = 0;
 const mainUrl = "https://muhammedaligulcemal.github.io/APT/HW/HW3/Sprite/";
 let imgArr = [];
-let linkArr = [];
-
+let blockArr = [];
+ctx.lineWidth = 10;
 async function loadImages() {
     for (let i = 0; i < 5; i++) {
         image = new Image();
         getImage(i, image);
         imgArr.push(image);
     }
-    for (let i = 0; i < 10; i++) {
-        let elementLink = {
-            linkName: "CW" + i,
-            xLoc: i * 100,
-            yLoc: 60
+    for (let i = 0; i < 5; i++) {
+        let elementBlock = {
+            blockName: "block" + i,
+            xLoc: i * 100 + 200,
+            yLoc: i * 100 + 200,
+            blockWidth: 100,
+            blockHeight: 100
         }
-        linkArr.push(elementLink);
+        blockArr.push(elementBlock);
     }
 }
 async function getImage(i, image) {
@@ -48,53 +52,118 @@ function myKeyPress() {
         if (keyName == "a") {
             goLeft();
         }
+        if (keyName == "w") {
+            goUp();
+        }
+        if (keyName == "s") {
+            goDown();
+        }
         if (keyName == " ") {
-            for (let i = 0; i < linkArr.length; i++) {
-                console.log(x);
-                //console.log(linkArr[i].xLoc);
-                //console.log(linkArr[i].xLoc + ctx.measureText(linkArr[i].linkName).width);
-                if (x >= linkArr[i].xLoc - 30 && x < linkArr[i].xLoc + ctx.measureText(linkArr[i].linkName).width - 20) {
-                    if(linkArr[i].linkName == "CW3"){
-                        location.href = "https://blm305.github.io/2022/work/Inspector";
-                    }else{
-                        console.log(linkArr[i].linkName);
-                        location.href = "https://muhammedaligulcemal.github.io/APT/CW/" + linkArr[i].linkName + ".html";
-                    }
-                   
-                }
-            }
+
         }
     }, false);
 
 }
 function goRight() {
-    x += 2;
-    if (x > CANVAS_WIDTH - 30) {
-        x = 0;
+    if (collisionControl() != 1) {
+        x += 2;
+        if (x > CANVAS_WIDTH - 30) {
+            x = CANVAS_WIDTH - 30;
+        }
+        imgIndex = ++imgIndex % 5;
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
+        ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        loadBlocks();
     }
-    imgIndex = ++imgIndex % 5;
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
-    loadLinks();
 }
 function goLeft() {
-    x -= 2;
-    if (x < 0) {
-        x = CANVAS_WIDTH - 30;
+    if (collisionControl() != 1) {
+        x -= 2;
+        if (x < 0) {
+            x = 0;
+        }
+        imgIndex = ++imgIndex % 5;
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
+        ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        loadBlocks();
     }
-    imgIndex = ++imgIndex % 5;
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
-    loadLinks();
 }
-function loadLinks() {
-    for (let i = 0; i < linkArr.length; i++) {
-        ctx.fillText(linkArr[i].linkName, linkArr[i].xLoc + 20, linkArr[i].yLoc);
+function goUp() {
+    if (collisionControl() != 1) {
+        y -= 2;
+        if (y < 0) {
+            y = 0;
+        }
+        imgIndex = ++imgIndex % 5;
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
+        ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        loadBlocks();
+    }
+    else{
+        y+=2;
+    }
+}
+function goDown() {
+    if (collisionControl() != 1) {
+        y += 2;
+        if (y > CANVAS_HEIGHT - spriteHeight) {
+            y = CANVAS_HEIGHT - spriteHeight;
+        }
+        imgIndex = ++imgIndex % 5;
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
+        ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        loadBlocks();
+    }
+    else{
+        y-=2;
+    }
+}
+function collisionControl() {
+    for (let i = 0; i < blockArr.length; i++) {
+        console.log("x: " + x);
+        console.log("y: " + y);
+        console.log("Matematik1:" + (y + spriteHeight));
+        console.log("Matematik2:" + (blockArr[i].yLoc + blockArr[i].blockHeight));
+        console.log(x + spriteSizeX >= blockArr[i].xLoc);
+        console.log(x <= blockArr[i].xLoc + blockArr[i].blockWidth);
+        console.log(y + spriteSizeY >= blockArr[i].yLoc);
+        console.log(y <= blockArr[i].yLoc + blockArr[i].blockHeight);
+        //console.log(linkArr[i].xLoc);
+        console.log(blockArr[i].xLoc + blockArr[i].blockWidth);
+        if ((x + spriteSizeX >= blockArr[i].xLoc
+            && x <= blockArr[i].xLoc + blockArr[i].blockWidth)
+            &&
+            ((y + spriteSizeY >= blockArr[i].yLoc
+                && y <= blockArr[i].yLoc + blockArr[i].blockHeight)
+            )) {
+            console.log("collision");
+            if (x + spriteSizeX == blockArr[i].xLoc) {
+                x -=2;
+
+            } if (x == blockArr[i].xLoc + blockArr[i].blockWidth) {
+                x+=2;
+
+            } 
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+function loadBlocks() {
+    for (let i = 0; i < blockArr.length; i++) {
+        ctx.strokeRect(blockArr[i].xLoc, blockArr[i].yLoc, blockArr[i].blockWidth, blockArr[i].blockHeight);
+        //ctx.fillText(blockArr[i].linkName, blockArr[i].xLoc + 20, blockArr[i].yLoc);
     }
 }
 async function init() {
     await loadImages();
-    loadLinks();
+    ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    loadBlocks();
     myKeyPress();
 }
 init();
