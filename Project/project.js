@@ -6,18 +6,19 @@ const spriteWidth = 100;
 const spriteHeight = 100;
 const spriteSizeX = 70;
 const spriteSizeY = 100;
+const marginX = 20;
+const marginY = 20;
+var collected = false;
 ctx.font = "20px Arial"
 let imgIndex = 0;
 let x = 0;
 let y = 0;
-let start = true;
-let pause = false;
-let stop = false;
-let gameFrame = 0;
+let gameFrame = 10;
 const mainUrl = "https://muhammedaligulcemal.github.io/APT/HW/HW3/Sprite/";
 let imgArr = [];
 let blockArr = [];
 ctx.lineWidth = 10;
+var objKey;
 async function loadImages() {
     for (let i = 0; i < 5; i++) {
         image = new Image();
@@ -33,6 +34,13 @@ async function loadImages() {
             blockHeight: 100
         }
         blockArr.push(elementBlock);
+    }
+    objKey = {
+        keyName: "key",
+        xLoc: 340,
+        yLoc: 420,
+        keyWidth: 30,
+        keyHeight: 30
     }
 }
 async function getImage(i, image) {
@@ -59,6 +67,10 @@ function myKeyPress() {
             goDown();
         }
         if (keyName == " ") {
+            if (!collected) {
+                collectKey();
+
+            }
 
         }
     }, false);
@@ -71,10 +83,7 @@ function goRight() {
             x = CANVAS_WIDTH - 30;
         }
         imgIndex = ++imgIndex % 5;
-        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
-        ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        loadBlocks();
+        restartCanvas();
     }
 }
 function goLeft() {
@@ -84,10 +93,7 @@ function goLeft() {
             x = 0;
         }
         imgIndex = ++imgIndex % 5;
-        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
-        ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        loadBlocks();
+        restartCanvas();
     }
 }
 function goUp() {
@@ -97,14 +103,9 @@ function goUp() {
             y = 0;
         }
         imgIndex = ++imgIndex % 5;
-        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
-        ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        loadBlocks();
+        restartCanvas();
     }
-    else{
-        y+=2;
-    }
+
 }
 function goDown() {
     if (collisionControl() != 1) {
@@ -113,17 +114,22 @@ function goDown() {
             y = CANVAS_HEIGHT - spriteHeight;
         }
         imgIndex = ++imgIndex % 5;
-        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
-        ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        loadBlocks();
+        restartCanvas();
     }
-    else{
-        y-=2;
+}
+function collectKey() {
+    if (!collected) {
+        if (x + spriteSizeX >= objKey.xLoc && x <= objKey.xLoc + objKey.keyWidth - marginX
+            && y <= objKey.yLoc + objKey.keyHeight - marginY && y + spriteSizeY >= objKey.yLoc) {
+            collected = true;
+        }
     }
+    restartCanvas();
 }
 function collisionControl() {
     for (let i = 0; i < blockArr.length; i++) {
+        console.log(blockArr.length);
+        console.log(i);
         console.log("x: " + x);
         console.log("y: " + y);
         console.log("Matematik1:" + (y + spriteHeight));
@@ -135,22 +141,29 @@ function collisionControl() {
         //console.log(linkArr[i].xLoc);
         console.log(blockArr[i].xLoc + blockArr[i].blockWidth);
         if ((x + spriteSizeX >= blockArr[i].xLoc
-            && x <= blockArr[i].xLoc + blockArr[i].blockWidth)
+            && x <= blockArr[i].xLoc + blockArr[i].blockWidth - marginX)
             &&
             ((y + spriteSizeY >= blockArr[i].yLoc
-                && y <= blockArr[i].yLoc + blockArr[i].blockHeight)
+                && y <= blockArr[i].yLoc + blockArr[i].blockHeight - marginY)
             )) {
             console.log("collision");
             if (x + spriteSizeX == blockArr[i].xLoc) {
-                x -=2;
+                x -= 2;
 
-            } if (x == blockArr[i].xLoc + blockArr[i].blockWidth) {
-                x+=2;
+            }
+            if (x == blockArr[i].xLoc + blockArr[i].blockWidth - marginX) {
+                x += 2;
 
-            } 
+            }
+            if (y + spriteSizeY == blockArr[i].yLoc || y + spriteSizeY == blockArr[i].yLoc + 2) {
+                y -= 2;
+
+            }
+            if (y == blockArr[i].yLoc + blockArr[i].blockHeight - marginY || y == blockArr[i].yLoc + blockArr[i].blockHeight - marginY + 2) {
+                y += 2;
+
+            }
             return 1;
-        } else {
-            return 0;
         }
     }
 }
@@ -159,6 +172,16 @@ function loadBlocks() {
         ctx.strokeRect(blockArr[i].xLoc, blockArr[i].yLoc, blockArr[i].blockWidth, blockArr[i].blockHeight);
         //ctx.fillText(blockArr[i].linkName, blockArr[i].xLoc + 20, blockArr[i].yLoc);
     }
+    if (!collected) {
+        ctx.strokeRect(objKey.xLoc, objKey.yLoc, objKey.keyWidth, objKey.keyHeight);
+    }
+
+}
+function restartCanvas() {
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
+    ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    loadBlocks();
 }
 async function init() {
     await loadImages();
