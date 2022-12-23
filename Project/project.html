@@ -4,15 +4,24 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
     <title>Project</title>
+    
 </head>
 
 <body>
-   
-    <div>
-        
-        <canvas id="layout">
-        </canvas>
+    <div class="row">
+        <div class="column left">
+            <canvas id="gameScreen"></canvas>
+            <button class="buttonUp" onclick="goUp()">↑</button>
+            <button class="buttonLeft" onclick="goLeft()">←</button>
+            <button class="buttonInt" onclick="interract()">x</button>
+            <button class="buttonRight" onclick="goRight()">→</button>
+            <button class="buttonDown" onclick="goDown()">↓</button>
+        </div>
+        <div class="column right" hidden>
+            <canvas id="layout"></canvas>
+        </div>
     </div>
     <script src="project.js"></script>
 

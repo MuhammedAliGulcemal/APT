@@ -1,0 +1,95 @@
+* {
+    box-sizing: border-box;
+}
+
+.column {
+    float: left;
+    padding: 10px;
+    height: 600px;
+}
+
+.left {
+    width: 30%;
+}
+
+.right {
+    width: 70%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.buttonUp {
+    background-color: #ad4caf;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin-top: 5px;
+    margin-left: 110px;
+    margin-right: 100px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.buttonLeft {
+    background-color: #ad4caf;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin-top: 5px;
+    margin-left: 20px;
+    margin-right: 2px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.buttonInt {
+    background-color: #ad4caf;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 2px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.buttonRight {
+    background-color: #ad4caf;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 1px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.buttonDown {
+    background-color: #ad4caf;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin-top: 5px;
+    margin-left: 110px;
+    margin-right: 100px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
