@@ -124,7 +124,6 @@ function myKeyPress() {
         }
         if (keyName == " ") {
             interract();
-
         }
     }, false);
 
