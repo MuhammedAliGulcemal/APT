@@ -17,7 +17,7 @@ const startY = 0;
 const speed = 2;
 var collected = false;
 var finished = false;
-ctx.font = "20px Arial"
+ctx.font = "10px Arial"
 let imgIndex = 0;
 let x = startX;
 let y = startY;
@@ -25,58 +25,88 @@ let gameFrame = 10;
 const mainUrl = "https://muhammedaligulcemal.github.io/APT/Project/Sprite/";
 let imgArr = [];
 let blockArr = [];
-ctx.lineWidth = 10;
-ctxGame.lineWidth = 10;
+ctx.lineWidth = 0.01;
 var objKey;
 var objChest;
 var elementBlock;
+let blockNum = 0;
+var keyImg = new Image();
+keyImg.src = "Sprite/key.png";
+var stoneImg = new Image();
+stoneImg.src = "Sprite/stone.png";
+var backGround = new Image();
+backGround.src = "Sprite/background.png";
+window.onload = function () {
+    init();
+}
 async function loadImages() {
     for (let i = 0; i < 5; i++) {
         image = new Image();
         getImage(i, image);
         imgArr.push(image);
     }
-    elementBlock = {
-        blockName: "block" + 0,
-        xLoc: 300,
-        yLoc: 100,
-        blockWidth: 300,
-        blockHeight: 100
+    for (let i = 0; i < 3; i++) {
+        blockNum += i;
+        elementBlock = {
+            blockImg: stoneImg,
+            blockName: "block" + blockNum,
+            xLoc: 300 + i * 100,
+            yLoc: 100,
+            blockWidth: 100,
+            blockHeight: 100
+        }
+        blockArr.push(elementBlock);
     }
-    blockArr.push(elementBlock);
-    elementBlock = {
-        blockName: "block" + 1,
-        xLoc: 200,
-        yLoc: 0,
-        blockWidth: 100,
-        blockHeight: 500
+    for (let i = 1; i < 5; i++) {
+        blockNum += i;
+        elementBlock = {
+            blockImg: stoneImg,
+            blockName: "block" + blockNum,
+            xLoc: 200,
+            yLoc: 0 + i * 100,
+            blockWidth: 100,
+            blockHeight: 100
+        }
+        blockArr.push(elementBlock);
     }
-    blockArr.push(elementBlock);
-    elementBlock = {
-        blockName: "block" + 2,
-        xLoc: 0,
-        yLoc: 100,
-        blockWidth: 100,
-        blockHeight: CANVAS_HEIGHT
+    for (let i = 0; i < 5; i++) {
+        blockNum += i;
+        elementBlock = {
+            blockImg: stoneImg,
+            blockName: "block" + blockNum,
+            xLoc: 0,
+            yLoc: 100 + i * 100,
+            blockWidth: 100,
+            blockHeight: 100
+        }
+        blockArr.push(elementBlock);
     }
-    blockArr.push(elementBlock);
-    elementBlock = {
-        blockName: "block" + 3,
-        xLoc: 300,
-        yLoc: 400,
-        blockWidth: 200,
-        blockHeight: 100
+    for (let i = 0; i < 2; i++) {
+        blockNum += i;
+        elementBlock = {
+            blockImg: stoneImg,
+            blockName: "block" + blockNum,
+            xLoc: 300 + i * 100,
+            yLoc: 400,
+            blockWidth: 100,
+            blockHeight: 100
+        }
+        blockArr.push(elementBlock);
     }
-    blockArr.push(elementBlock);
-    elementBlock = {
-        blockName: "block" + 4,
-        xLoc: 600,
-        yLoc: 100,
-        blockWidth: 100,
-        blockHeight: 400
+    for (let i = 0; i < 4; i++) {
+        blockNum += i;
+        elementBlock = {
+            blockImg: stoneImg,
+            blockName: "block" + blockNum,
+            xLoc: 600,
+            yLoc: 100 + i * 100,
+            blockWidth: 100,
+            blockHeight: 100
+        }
+        blockArr.push(elementBlock);
     }
-    blockArr.push(elementBlock);
     elementBlock = {
+        blockImg: stoneImg,
         blockName: "door" + 0,
         xLoc: 500,
         yLoc: 400,
@@ -84,12 +114,14 @@ async function loadImages() {
         blockHeight: 100
     }
     blockArr.push(elementBlock);
+
     objKey = {
+        keyImage: keyImg,
         keyName: "key" + 0,
         xLoc: 343,
         yLoc: 38,
-        keyWidth: 30,
-        keyHeight: 30
+        keyWidth: 32,
+        keyHeight: 32
     }
     objChest = {
         chestName: "chest" + 0,
@@ -128,7 +160,7 @@ function myKeyPress() {
     }, false);
 
 }
-function interract(){
+function interract() {
     if (!collected) {
         collectKey();
     } else {
@@ -197,55 +229,101 @@ function collectChest() {
 }
 function collisionControl() {
     for (let i = 0; i < blockArr.length; i++) {
-        console.log(blockArr.length);
-        console.log(i);
-        console.log("x: " + x);
-        console.log("y: " + y);
-        console.log("Matematik1:" + (y + spriteHeight));
-        console.log("Matematik2:" + (blockArr[i].yLoc + blockArr[i].blockHeight));
-        console.log(x + spriteSizeX >= blockArr[i].xLoc);
-        console.log(x <= blockArr[i].xLoc + blockArr[i].blockWidth);
-        console.log(y + spriteSizeY >= blockArr[i].yLoc);
-        console.log(y <= blockArr[i].yLoc + blockArr[i].blockHeight);
-        //console.log(linkArr[i].xLoc);
-        console.log(blockArr[i].xLoc + blockArr[i].blockWidth);
-        if ((x + spriteSizeX >= blockArr[i].xLoc
-            && x <= blockArr[i].xLoc + blockArr[i].blockWidth - marginX)
-            &&
-            ((y + spriteSizeY >= blockArr[i].yLoc
-                && y <= blockArr[i].yLoc + blockArr[i].blockHeight - marginY)
-            )) {
-            console.log("collision");
-            if (x + spriteSizeX == blockArr[i].xLoc) {
-                x -= speed;
+        if (collected) {
+            if (blockArr[i].blockName != "door0") {
+                console.log(blockArr.length);
+                console.log(i);
+                console.log("x: " + x);
+                console.log("y: " + y);
+                console.log("Matematik1:" + (y + spriteHeight));
+                console.log("Matematik2:" + (blockArr[i].yLoc + blockArr[i].blockHeight));
+                console.log(x + spriteSizeX >= blockArr[i].xLoc);
+                console.log(x <= blockArr[i].xLoc + blockArr[i].blockWidth);
+                console.log(y + spriteSizeY >= blockArr[i].yLoc);
+                console.log(y <= blockArr[i].yLoc + blockArr[i].blockHeight);
+                //console.log(linkArr[i].xLoc);
+                console.log(blockArr[i].xLoc + blockArr[i].blockWidth);
+                if ((x + spriteSizeX >= blockArr[i].xLoc
+                    && x <= blockArr[i].xLoc + blockArr[i].blockWidth - marginX)
+                    &&
+                    ((y + spriteSizeY >= blockArr[i].yLoc
+                        && y <= blockArr[i].yLoc + blockArr[i].blockHeight - marginY)
+                    )) {
+                    console.log("collision");
+                    if (x + spriteSizeX == blockArr[i].xLoc) {
+                        x -= speed;
 
-            }
-            if (x == blockArr[i].xLoc + blockArr[i].blockWidth - marginX) {
-                x += speed;
+                    }
+                    if (x == blockArr[i].xLoc + blockArr[i].blockWidth - marginX) {
+                        x += speed;
 
-            }
-            if (y + spriteSizeY == blockArr[i].yLoc || y + spriteSizeY == blockArr[i].yLoc + speed) {
-                y -= speed;
+                    }
+                    if (y + spriteSizeY == blockArr[i].yLoc || y + spriteSizeY == blockArr[i].yLoc + speed) {
+                        y -= speed;
 
-            }
-            if (y == blockArr[i].yLoc + blockArr[i].blockHeight - marginY || y == blockArr[i].yLoc + blockArr[i].blockHeight - marginY + speed) {
-                y += speed;
+                    }
+                    if (y == blockArr[i].yLoc + blockArr[i].blockHeight - marginY || y == blockArr[i].yLoc + blockArr[i].blockHeight - marginY + speed) {
+                        y += speed;
 
+                    }
+                    return 1;
+                }
             }
-            return 1;
+        } else {
+            console.log(blockArr.length);
+            console.log(i);
+            console.log("x: " + x);
+            console.log("y: " + y);
+            console.log("Matematik1:" + (y + spriteHeight));
+            console.log("Matematik2:" + (blockArr[i].yLoc + blockArr[i].blockHeight));
+            console.log(x + spriteSizeX >= blockArr[i].xLoc);
+            console.log(x <= blockArr[i].xLoc + blockArr[i].blockWidth);
+            console.log(y + spriteSizeY >= blockArr[i].yLoc);
+            console.log(y <= blockArr[i].yLoc + blockArr[i].blockHeight);
+            //console.log(linkArr[i].xLoc);
+            console.log(blockArr[i].xLoc + blockArr[i].blockWidth);
+            if ((x + spriteSizeX >= blockArr[i].xLoc
+                && x <= blockArr[i].xLoc + blockArr[i].blockWidth - marginX)
+                &&
+                ((y + spriteSizeY >= blockArr[i].yLoc
+                    && y <= blockArr[i].yLoc + blockArr[i].blockHeight - marginY)
+                )) {
+                console.log("collision");
+                if (x + spriteSizeX == blockArr[i].xLoc) {
+                    x -= speed;
+
+                }
+                if (x == blockArr[i].xLoc + blockArr[i].blockWidth - marginX) {
+                    x += speed;
+
+                }
+                if (y + spriteSizeY == blockArr[i].yLoc || y + spriteSizeY == blockArr[i].yLoc + speed) {
+                    y -= speed;
+
+                }
+                if (y == blockArr[i].yLoc + blockArr[i].blockHeight - marginY || y == blockArr[i].yLoc + blockArr[i].blockHeight - marginY + speed) {
+                    y += speed;
+
+                }
+                return 1;
+            }
         }
+
     }
 }
 function loadBlocks() {
     if (!collected) {
         for (let i = 0; i < blockArr.length; i++) {
+            ctx.drawImage(blockArr[i].blockImg, blockArr[i].xLoc, blockArr[i].yLoc, blockArr[i].blockWidth, blockArr[i].blockHeight);
             ctx.strokeRect(blockArr[i].xLoc, blockArr[i].yLoc, blockArr[i].blockWidth, blockArr[i].blockHeight);
             //ctx.fillText(blockArr[i].linkName, blockArr[i].xLoc + 20, blockArr[i].yLoc);
         }
+        ctx.drawImage(objKey.keyImage,objKey.xLoc, objKey.yLoc, objKey.keyWidth, objKey.keyHeight);
         ctx.strokeRect(objKey.xLoc, objKey.yLoc, objKey.keyWidth, objKey.keyHeight);
     } else {
         for (let i = 0; i < blockArr.length; i++) {
             if (blockArr[i].blockName != "door0") {
+                ctx.drawImage(blockArr[i].blockImg, blockArr[i].xLoc, blockArr[i].yLoc, blockArr[i].blockWidth, blockArr[i].blockHeight);
                 ctx.strokeRect(blockArr[i].xLoc, blockArr[i].yLoc, blockArr[i].blockWidth, blockArr[i].blockHeight);
             }
             //ctx.fillText(blockArr[i].linkName, blockArr[i].xLoc + 20, blockArr[i].yLoc);
@@ -256,19 +334,20 @@ function loadBlocks() {
 }
 function restartCanvas() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.drawImage(backGround, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     ctx.drawImage(imgArr[imgIndex], x, y, spriteWidth, spriteHeight);
     ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     loadBlocks();
     ctxGame.clearRect(0, 0, CANVAS_GAME_WIDTH, CANVAS_GAME_HEIGHT);
     ctxGame.strokeRect(0, 0, CANVAS_GAME_WIDTH, CANVAS_GAME_HEIGHT);
-    ctxGame.drawImage(canvas,x - spriteSizeX,y-spriteSizeY +marginY + 20,CANVAS_WIDTH,CANVAS_HEIGHT,0,0,1000,1000);
-    
+    ctxGame.drawImage(canvas, x - spriteSizeX, y - spriteSizeY + marginY + 20, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0, 1000, 1000);
+
 }
 async function init() {
     await loadImages();
     ctx.strokeRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.drawImage(backGround, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     restartCanvas();
     loadBlocks();
     myKeyPress();
 }
-init();
