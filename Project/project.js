@@ -38,6 +38,8 @@ var backGround = new Image();
 backGround.src = "Sprite/background.png";
 var doorImg = new Image();
 doorImg.src = "Sprite/door.png";
+var chestImg = new Image();
+chestImg.src = "Sprite/chest.png";
 window.onload = function () {
     init();
 }
@@ -120,17 +122,18 @@ async function loadImages() {
     objKey = {
         keyImage: keyImg,
         keyName: "key" + 0,
-        xLoc: 343,
+        xLoc: 313,
         yLoc: 38,
         keyWidth: 32,
         keyHeight: 32
     }
     objChest = {
+        chestImage: chestImg,
         chestName: "chest" + 0,
-        xLoc: 340,
-        yLoc: 230,
-        chestWidth: 70,
-        chestHeight: 35
+        xLoc: 300,
+        yLoc: 220,
+        chestWidth: 64,
+        chestHeight: 32
     }
 }
 async function getImage(i, image) {
@@ -140,6 +143,7 @@ async function getImage(i, image) {
         return image.src = URL.createObjectURL(blob);
     })
 }
+
 function myKeyPress() {
     document.addEventListener('keydown', (event) => {
         const keyName = event.key;
@@ -176,7 +180,7 @@ function goRight() {
             x = CANVAS_WIDTH - 30;
         }
         imgIndex = ++imgIndex % 5;
-        restartCanvas();
+        restartCanvas();0
     }
 }
 function goLeft() {
@@ -331,6 +335,7 @@ function loadBlocks() {
             //ctx.fillText(blockArr[i].linkName, blockArr[i].xLoc + 20, blockArr[i].yLoc);
         }
     }
+    ctx.drawImage(objChest.chestImage,objChest.xLoc, objChest.yLoc, objChest.chestWidth, objChest.chestHeight);
     ctx.strokeRect(objChest.xLoc, objChest.yLoc, objChest.chestWidth, objChest.chestHeight);
 
 }
