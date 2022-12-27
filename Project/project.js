@@ -36,6 +36,8 @@ var stoneImg = new Image();
 stoneImg.src = "Sprite/stone.png";
 var backGround = new Image();
 backGround.src = "Sprite/background.png";
+var doorImg = new Image();
+doorImg.src = "Sprite/door.png";
 window.onload = function () {
     init();
 }
@@ -57,7 +59,7 @@ async function loadImages() {
         }
         blockArr.push(elementBlock);
     }
-    for (let i = 1; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
         blockNum += i;
         elementBlock = {
             blockImg: stoneImg,
@@ -106,7 +108,7 @@ async function loadImages() {
         blockArr.push(elementBlock);
     }
     elementBlock = {
-        blockImg: stoneImg,
+        blockImg: doorImg,
         blockName: "door" + 0,
         xLoc: 500,
         yLoc: 400,
