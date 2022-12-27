@@ -31,6 +31,10 @@
         </div>
     </div>
     <script src="project.js"></script>
-
+    <script>
+        if(navigator.serviceWorker){
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
 
 </body>

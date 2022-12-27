@@ -237,18 +237,6 @@ function collisionControl() {
     for (let i = 0; i < blockArr.length; i++) {
         if (collected) {
             if (blockArr[i].blockName != "door0") {
-                console.log(blockArr.length);
-                console.log(i);
-                console.log("x: " + x);
-                console.log("y: " + y);
-                console.log("Matematik1:" + (y + spriteHeight));
-                console.log("Matematik2:" + (blockArr[i].yLoc + blockArr[i].blockHeight));
-                console.log(x + spriteSizeX >= blockArr[i].xLoc);
-                console.log(x <= blockArr[i].xLoc + blockArr[i].blockWidth);
-                console.log(y + spriteSizeY >= blockArr[i].yLoc);
-                console.log(y <= blockArr[i].yLoc + blockArr[i].blockHeight);
-                //console.log(linkArr[i].xLoc);
-                console.log(blockArr[i].xLoc + blockArr[i].blockWidth);
                 if ((x + spriteSizeX >= blockArr[i].xLoc
                     && x <= blockArr[i].xLoc + blockArr[i].blockWidth - marginX)
                     &&
@@ -276,18 +264,6 @@ function collisionControl() {
                 }
             }
         } else {
-            console.log(blockArr.length);
-            console.log(i);
-            console.log("x: " + x);
-            console.log("y: " + y);
-            console.log("Matematik1:" + (y + spriteHeight));
-            console.log("Matematik2:" + (blockArr[i].yLoc + blockArr[i].blockHeight));
-            console.log(x + spriteSizeX >= blockArr[i].xLoc);
-            console.log(x <= blockArr[i].xLoc + blockArr[i].blockWidth);
-            console.log(y + spriteSizeY >= blockArr[i].yLoc);
-            console.log(y <= blockArr[i].yLoc + blockArr[i].blockHeight);
-            //console.log(linkArr[i].xLoc);
-            console.log(blockArr[i].xLoc + blockArr[i].blockWidth);
             if ((x + spriteSizeX >= blockArr[i].xLoc
                 && x <= blockArr[i].xLoc + blockArr[i].blockWidth - marginX)
                 &&
@@ -318,11 +294,12 @@ function collisionControl() {
     }
 }
 function loadBlocks() {
+    ctx.drawImage(objChest.chestImage,objChest.xLoc, objChest.yLoc, objChest.chestWidth, objChest.chestHeight);
+    ctx.strokeRect(objChest.xLoc, objChest.yLoc, objChest.chestWidth, objChest.chestHeight);
     if (!collected) {
         for (let i = 0; i < blockArr.length; i++) {
             ctx.drawImage(blockArr[i].blockImg, blockArr[i].xLoc, blockArr[i].yLoc, blockArr[i].blockWidth, blockArr[i].blockHeight);
             ctx.strokeRect(blockArr[i].xLoc, blockArr[i].yLoc, blockArr[i].blockWidth, blockArr[i].blockHeight);
-            //ctx.fillText(blockArr[i].linkName, blockArr[i].xLoc + 20, blockArr[i].yLoc);
         }
         ctx.drawImage(objKey.keyImage,objKey.xLoc, objKey.yLoc, objKey.keyWidth, objKey.keyHeight);
         ctx.strokeRect(objKey.xLoc, objKey.yLoc, objKey.keyWidth, objKey.keyHeight);
@@ -332,12 +309,8 @@ function loadBlocks() {
                 ctx.drawImage(blockArr[i].blockImg, blockArr[i].xLoc, blockArr[i].yLoc, blockArr[i].blockWidth, blockArr[i].blockHeight);
                 ctx.strokeRect(blockArr[i].xLoc, blockArr[i].yLoc, blockArr[i].blockWidth, blockArr[i].blockHeight);
             }
-            //ctx.fillText(blockArr[i].linkName, blockArr[i].xLoc + 20, blockArr[i].yLoc);
         }
     }
-    ctx.drawImage(objChest.chestImage,objChest.xLoc, objChest.yLoc, objChest.chestWidth, objChest.chestHeight);
-    ctx.strokeRect(objChest.xLoc, objChest.yLoc, objChest.chestWidth, objChest.chestHeight);
-
 }
 function restartCanvas() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
