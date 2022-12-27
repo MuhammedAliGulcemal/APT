@@ -4,7 +4,7 @@ const canvasGame = document.getElementById("gameScreen");
 const ctxGame = canvasGame.getContext("2d");
 const CANVAS_WIDTH = canvas.width = 800;
 const CANVAS_HEIGHT = canvas.height = 600;
-const CANVAS_GAME_WIDTH = canvasGame.width = 300;
+const CANVAS_GAME_WIDTH = canvasGame.width = 340;
 const CANVAS_GAME_HEIGHT = canvasGame.height = 400;
 const spriteWidth = 100;
 const spriteHeight = 100;
@@ -228,7 +228,7 @@ function collectChest() {
         if (x + spriteSizeX >= objChest.xLoc && x <= objChest.xLoc + objChest.chestWidth - marginX
             && y <= objChest.yLoc + objChest.chestHeight - marginY && y + spriteSizeY >= objChest.yLoc) {
             finished = true;
-            alert("game ended");
+            goEnd();
         }
     }
     restartCanvas();
@@ -322,6 +322,15 @@ function restartCanvas() {
     ctxGame.strokeRect(0, 0, CANVAS_GAME_WIDTH, CANVAS_GAME_HEIGHT);
     ctxGame.drawImage(canvas, x - spriteSizeX, y - spriteSizeY + marginY + 20, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0, 1000, 1000);
 
+}
+function goEnd(){
+    alert("game ended");
+    x = startX;
+    y = startY;
+    imgIndex = 0;
+    collected = false;
+    finished = false;
+    loadBlocks();
 }
 async function init() {
     await loadImages();
