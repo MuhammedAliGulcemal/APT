@@ -1,20 +1,20 @@
 const CACHE_NAME = "project"
 const STATIC_ASSETS = [
     './',
-    './Project/Sprite/0.png',
-    './Project/Sprite/1.png',
-    './Project/Sprite/2.png',
-    './Project/Sprite/3.png',
-    './Project/Sprite/4.png',
-    './Project/Sprite/background.png',
-    './Project/Sprite/chest.png',
-    './Project/Sprite/dirt.png',
-    './Project/Sprite/door.png',
-    './Project/Sprite/key.png',
-    './Project/Sprite/stone.png',
-    './Project/project.html',
-    './Project/project.js',
-    './Project/styles.css'
+    './Sprite/0.png',
+    './Sprite/1.png',
+    './Sprite/2.png',
+    './Sprite/3.png',
+    './Sprite/4.png',
+    './Sprite/background.png',
+    './Sprite/chest.png',
+    './Sprite/dirt.png',
+    './Sprite/door.png',
+    './Sprite/key.png',
+    './Sprite/stone.png',
+    './project.html',
+    './project.js',
+    './styles.css'
 ] 
 async function preCache(){
     const cache = await caches.open(CACHE_NAME)
