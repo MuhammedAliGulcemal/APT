@@ -1,6 +1,6 @@
-const CACHE_NAME = "static_cache"
+const CACHE_NAME = "project"
 const STATIC_ASSETS = [
-    '/',
+    './',
     '/Project/Sprite/0.png',
     '/Project/Sprite/1.png',
     '/Project/Sprite/2.png',
