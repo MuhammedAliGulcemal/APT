@@ -17,17 +17,15 @@
     <div class="row">
         <div class="column left">
             <canvas id="gameScreen"></canvas>
-            
-            <div style="width: 300px;">
-                <button class="buttonUp" onclick="goUp()">↑</button>
-            </div>
-            <div style="width: 300px;">
-                <button class="buttonLeft" onclick="goLeft()">←</button>
-                <button class="buttonInt" onclick="interract()">x</button>
-                <button class="buttonRight" onclick="goRight()">→</button>
-            </div>
-            <div style="width: 300px;">
-                <button class="buttonDown" onclick="goDown()">↓</button>
+            <div class="row">
+                <div class="column left">
+                    <canvas id="canvas" name="game"></canvas>
+                </div>
+                <div class="column right">
+                    <button class="buttonInt" onclick="interract()">X</button>
+                </div>
+                <p>Referans: </p>
+                <a href="https://www.instructables.com/Making-a-Joystick-With-HTML-pure-JavaScript/">Joystick</a>
             </div>
         </div>
         <div class="column right" hidden>
@@ -35,8 +33,9 @@
         </div>
     </div>
     <script src="project.js"></script>
+    <script src="joystick.js"></script>
     <script>
-        if(navigator.serviceWorker){
+        if (navigator.serviceWorker) {
             navigator.serviceWorker.register('sw.js');
         }
     </script>

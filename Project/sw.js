@@ -16,6 +16,7 @@ const STATIC_ASSETS = [
     '/APT/Project/Sprite/stone.png',
     '/APT/Project/project.html',
     '/APT/Project/project.js',
+    '/APT/Project/joystick.js',
     '/APT/Project/styles.css'
 ] 
 self.addEventListener("install", (e) => {
