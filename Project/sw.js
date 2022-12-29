@@ -34,17 +34,3 @@ self.addEventListener("fetch", e => {
         })
     )
 })
-async function cleanupCache(){
-    const keys = await caches.keys();
-    const keysToDelete = keys.map(key => {
-        if(key !== CACHE_NAME){
-            return caches.delete(key);
-        }
-    });
-    return Promise.all(keysToDelete);
-}
-
-self.addEventListener("activate", event => {
-    console.log("[SW] activated");
-    event.waitUntil(cleanupCache());
-} );
