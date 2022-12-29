@@ -16,16 +16,24 @@ const STATIC_ASSETS = [
     './project.js',
     './styles.css'
 ] 
-async function preCache(){
-    const cache = await caches.open(CACHE_NAME)
-    return cache.addAll(STATIC_ASSETS)
-}
-self.addEventListener("install", event => {
-    console.log("[SW] installed");
-    self.skipWaiting();
-    event.waitUntil(preCache())
-} );
+self.addEventListener("install", (e) => {
+    e.waitUntil(
+        caches.open(CACHE_NAME).then(
+            cache => {
+                return cache.addAll(STATIC_ASSETS);
+            }
+        )
+    )
+});
 
+self.addEventListener("fetch", e => {
+    console.log(`getir from ${e.request.url}`);
+    e.respondWith(
+        caches.match(e.request).then(response => {
+            return response || fetch(e.request);
+        })
+    )
+})
 async function cleanupCache(){
     const keys = await caches.keys();
     const keysToDelete = keys.map(key => {
@@ -39,19 +47,4 @@ async function cleanupCache(){
 self.addEventListener("activate", event => {
     console.log("[SW] activated");
     event.waitUntil(cleanupCache());
-} );
-
-async function fetchAssets(event){
-    try{
-        const response = await fetch(event.request);
-        return response;
-    }catch(err){
-        const cache = await caches.open(CACHE_NAME);
-        return cache.match(event.request);
-    }
-}
-
-self.addEventListener("fetch", event => {
-    console.log("[SW] fetched");
-    event.respondWith(fetchAssets(event));
 } );
