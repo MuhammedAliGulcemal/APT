@@ -1,26 +1,25 @@
 const CACHE_NAME = "project"
-/*const STATIC_ASSETS = [
-    './',
-    './Sprite/0.png',
-    './Sprite/1.png',
-    './Sprite/2.png',
-    './Sprite/3.png',
-    './Sprite/4.png',
-    './Sprite/background.png',
-    './Sprite/chest.png',
-    './Sprite/dirt.png',
-    './Sprite/door.png',
-    './Sprite/key.png',
-    './Sprite/stone.png',
-    './project.html',
-    './project.js',
-    './styles.css'
-] */
+const STATIC_ASSETS = [
+    '/APT/Project/Sprite/0.png',
+    '/APT/Project/Sprite/1.png',
+    '/APT/Project/Sprite/2.png',
+    '/APT/Project/Sprite/3.png',
+    '/APT/Project/Sprite/4.png',
+    '/APT/Project/Sprite/background.png',
+    '/APT/Project/Sprite/chest.png',
+    '/APT/Project/Sprite/dirt.png',
+    '/APT/Project/Sprite/door.png',
+    '/APT/Project/Sprite/key.png',
+    '/APT/Project/Sprite/stone.png',
+    '/APT/Project/project.html	',
+    '/APT/Project/project.js',
+    '/APT/Project/styles.css'
+] 
 self.addEventListener("install", (e) => {
     e.waitUntil(
         caches.open(CACHE_NAME).then(
             cache => {
-                return cache.add("./project.html");
+                return cache.addAll(STATIC_ASSETS);
             }
         )
     )
