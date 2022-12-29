@@ -1,5 +1,8 @@
 const CACHE_NAME = "project"
 const STATIC_ASSETS = [
+    '/APT/Pictures/192M.png',
+    '/APT/Pictures/512M.png',
+    '/APT/Pictures/M.png',
     '/APT/Project/Sprite/0.png',
     '/APT/Project/Sprite/1.png',
     '/APT/Project/Sprite/2.png',
@@ -11,7 +14,7 @@ const STATIC_ASSETS = [
     '/APT/Project/Sprite/door.png',
     '/APT/Project/Sprite/key.png',
     '/APT/Project/Sprite/stone.png',
-    '/APT/Project/project.html	',
+    '/APT/Project/project.html',
     '/APT/Project/project.js',
     '/APT/Project/styles.css'
 ] 
