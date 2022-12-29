@@ -1,0 +1,16 @@
+{
+    "name": "untitled maze game",
+    "short_name": "umg",
+    "start_url": ".",
+    "background_color": "#ad4caf",
+    "theme_color": "#ad4caf",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/Pictures/M.png",
+            "sizes": "494x394",
+            "type": "image/png"
+        }
+    ]
+
+}
